@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Zadań</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f3f3f3;
+            padding: 10px;
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lista Zadań</h2>
+    <input type="text" id="zadanieInput" placeholder="Wpisz zadanie">
+    <button onclick="dodajZadanie()">Dodaj</button>
+    <ul id="listaZadan"></ul>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", wczytajZadania);
+
+        function wczytajZadania() {
+            const zadania = JSON.parse(localStorage.getItem("zadania")) || [];
+            zadania.forEach(zadanie => dodajZadanieDoDOM(zadanie));
+        }
+
+        function dodajZadanie() {
+            const input = document.getElementById("zadanieInput");
+            const tekstZadania = input.value.trim();
+            if (!tekstZadania) return;
+
+            dodajZadanieDoDOM(tekstZadania);
+            zapiszZadanie(tekstZadania);
+            input.value = "";
+        }
+
+        function dodajZadanieDoDOM(tekstZadania) {
+            const listaZadan = document.getElementById("listaZadan");
+            const li = document.createElement("li");
+            li.textContent = tekstZadania;
+
+            const przyciskUsun = document.createElement("button");
+            przyciskUsun.textContent = "Usuń";
+            przyciskUsun.onclick = function () {
+                li.remove();
+                usunZadanie(tekstZadania);
+            };
+
+            li.appendChild(przyciskUsun);
+            listaZadan.appendChild(li);
+        }
+
+        function zapiszZadanie(tekstZadania) {
+            const zadania = JSON.parse(localStorage.getItem("zadania")) || [];
+            zadania.push(tekstZadania);
+            localStorage.setItem("zadania", JSON.stringify(zadania));
+        }
+
+        function usunZadanie(tekstZadania) {
+            let zadania = JSON.parse(localStorage.getItem("zadania")) || [];
+            zadania = zadania.filter(zadanie => zadanie !== tekstZadania);
+            localStorage.setItem("zadania", JSON.stringify(zadania));
+        }
+    </script>
+</body>
+</html>
