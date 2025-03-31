@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularz Dynamiczny</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Formularz dynamiczny</h1>
+    <form id="contact-form">
+        <label for="name">Imię:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <div id="additional-emails"></div>
+
+        <button type="button" id="add-email-button">Dodaj email</button>
+
+        <label for="subject">Wybierz czy firma:</label>
+        <select id="subject" name="subject" required>
+            <option value=""></option>
+            <option value="wsparcie">Firma</option>
+            <option value="opinie">Nie firma</option>
+        </select>
+        
+        <div id="additional-fields"></div>
+        
+        <button type="submit">Wyślij</button>
+    </form>
+
+    <div id="confirmation-message" style="display:none;">
+        <p>Formularz został wysłany!</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
